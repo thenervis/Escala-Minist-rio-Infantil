@@ -15,13 +15,8 @@ const VolunteerManager: React.FC<VolunteerManagerProps> = ({ volunteers, onAdd, 
   const [searchTerm, setSearchTerm] = useState('');
 
   const formatCanadianPhone = (value: string) => {
-    // Remove tudo que não é dígito
     const digits = value.replace(/\D/g, '');
-    
-    // Limita a 10 dígitos
     const limited = digits.substring(0, 10);
-    
-    // Aplica a máscara (XXX) XXX - XXXX
     if (limited.length <= 3) {
       return limited.length > 0 ? `(${limited}` : limited;
     } else if (limited.length <= 6) {
@@ -42,13 +37,12 @@ const VolunteerManager: React.FC<VolunteerManagerProps> = ({ volunteers, onAdd, 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Valida se tem os 10 dígitos necessários para o Canadá
     if (newName && newPhone.replace(/\D/g, '').length === 10) {
       onAdd(newName, newPhone);
       setNewName('');
       setNewPhone('');
-    } else if (newPhone.replace(/\D/g, '').length !== 10) {
-      alert("Por favor, insira um telefone válido com 10 dígitos (padrão canadense).");
+    } else {
+      alert("Por favor, insira um telefone válido com 10 dígitos.");
     }
   };
 
@@ -56,7 +50,7 @@ const VolunteerManager: React.FC<VolunteerManagerProps> = ({ volunteers, onAdd, 
     <div className="space-y-8">
       <header>
         <h2 className="text-3xl font-bold text-slate-800">Voluntários</h2>
-        <p className="text-slate-500">Gestão da equipe no Canadá.</p>
+        <p className="text-slate-500">Gestão da equipe do ministério.</p>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -88,7 +82,6 @@ const VolunteerManager: React.FC<VolunteerManagerProps> = ({ volunteers, onAdd, 
                 className="w-full px-4 py-2 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all font-mono"
                 required
               />
-              <p className="text-[10px] text-slate-400 mt-1 italic">Padrão local de 10 dígitos</p>
             </div>
             <button 
               type="submit"
@@ -119,7 +112,6 @@ const VolunteerManager: React.FC<VolunteerManagerProps> = ({ volunteers, onAdd, 
                   <tr>
                     <th className="p-4 text-xs font-semibold text-slate-400 uppercase">Nome</th>
                     <th className="p-4 text-xs font-semibold text-slate-400 uppercase">Contato</th>
-                    <th className="p-4 text-xs font-semibold text-slate-400 uppercase">Status</th>
                     <th className="p-4 text-xs font-semibold text-slate-400 uppercase text-right">Ações</th>
                   </tr>
                 </thead>
@@ -136,11 +128,6 @@ const VolunteerManager: React.FC<VolunteerManagerProps> = ({ volunteers, onAdd, 
                           <span className="text-sm font-mono">{v.phone}</span>
                         </div>
                       </td>
-                      <td className="p-4">
-                        <span className="px-2 py-1 bg-green-100 text-green-700 rounded-md text-[10px] font-bold uppercase">
-                          Ativo
-                        </span>
-                      </td>
                       <td className="p-4 text-right">
                         <button 
                           onClick={() => {
@@ -154,7 +141,7 @@ const VolunteerManager: React.FC<VolunteerManagerProps> = ({ volunteers, onAdd, 
                     </tr>
                   )) : (
                     <tr>
-                      <td colSpan={4} className="p-8 text-center text-slate-400">
+                      <td colSpan={3} className="p-8 text-center text-slate-400">
                         Nenhum voluntário encontrado.
                       </td>
                     </tr>

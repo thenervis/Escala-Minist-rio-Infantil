@@ -78,7 +78,6 @@ const App: React.FC = () => {
   };
 
   const toggleAssignment = (date: string, roomId: string, volunteerId: string) => {
-    // Permite que qualquer um se escale agora
     setAssignments(prev => {
       const existing = prev.find(a => a.date === date && a.roomId === roomId && a.volunteerId === volunteerId);
       if (existing) {
@@ -96,7 +95,6 @@ const App: React.FC = () => {
   };
 
   const removeAssignment = (id: string) => {
-    // Permite que qualquer um remova sua escala
     setAssignments(prev => prev.filter(a => a.id !== id));
   };
 
